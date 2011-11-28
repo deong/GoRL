@@ -1,34 +1,27 @@
 package main
 
 import (
-//	"fmt"
+	"fmt"
 	"flag"
-//	conf "goconf.googlecode.com/hg"
+	"os"
+	"core"
+	"environment"
 )
 
 func main() {
-	var configFile string
-	var policyFile string
-
-	flag.StringVar(&configFile, "conf", "gorl.cfg", "A configuration file defining parameters of the run.")
-	flag.StringVar(&policyFile, "policy", "policy.dat", "File containing a saved policy that will be used to initialize the learner.")
+	configFile := flag.String("conf", "", "A configuration file defining parameters of the run.")
+	//policyFile := flag.String("policy", "policy.dat", "File containing a saved policy that will be used to initialize the learner.")
 	flag.Parse()
 
-	// if conf.Lookup("conf") == nil {
-	// 	fmt.Println("required parameter 'conf' not specified.")
-	// 	os.Exit(1)
-	// }
-	
-	InitConfig(configFile)
+	if *configFile == "" {
+		flag.Usage()
+		os.Exit(1)
+	}
+	if err := core.InitConfig(*configFile); err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
 
-	// dims := make([][]float64, len(myDP))
-	// for i := 0; i < len(myDP); i++ {
-	// 	dims[i] = Linspace(-1.0, 1.0, int(myDP[i]))
-	// }
-	// states := BuildLattice(dims)
-
-	// fmt.Println("")
-	// for i := range states {
-	// 	fmt.Println(states[i])
-	// }
+	environment := environment.CreateEnvironment()
+	fmt.Println(environment)
 }

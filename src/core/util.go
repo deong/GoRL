@@ -1,4 +1,4 @@
-package main
+package core
 
 import (
 	"container/list"
@@ -69,7 +69,7 @@ func BuildLattice(dimensions [][]float64) []State {
 		partial.PushBack(*s)
 	}
 
-	index := 0
+	index := uint(0)
 	for partial.Len() > 0 {
 		p := partial.Front()
 		s := p.Value.(State)

@@ -1,4 +1,4 @@
-package main
+package core
 
 import (
 	"testing"
@@ -6,8 +6,8 @@ import (
 
 func TestInitConfig(t *testing.T) {
 	// check an existing file
-	if err := InitConfig("../cfg/sample.cfg"); err != nil {
-		t.Errorf("Error opening configuration file: %v\n", "../cfg/sample.cfg")
+	if err := InitConfig("sample.cfg"); err != nil {
+		t.Errorf("Error opening configuration file: %v\n", "sample.cfg")
 	} else {
 		// check a few parameters
 		if lm, err2 := Float64Parameter("learning", "lambda"); err2 != nil {
