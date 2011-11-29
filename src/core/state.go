@@ -5,8 +5,8 @@ package core
 // should serve as indices into an array of states (i.e., they should span the
 // range [0, n-1].
 type State struct {
-	id   uint
-	vals []float64
+	Id   uint
+	Vals []float64
 }
 
 

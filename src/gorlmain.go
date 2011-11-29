@@ -22,6 +22,6 @@ func main() {
 		os.Exit(1)
 	}
 
-	environment := environment.CreateEnvironment()
-	fmt.Println(environment)
+	env := environment.CreateEnvironment()
+	fmt.Println(env.Features())
 }

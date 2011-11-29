@@ -64,8 +64,8 @@ func BuildLattice(dimensions [][]float64) []State {
 	// create some temp storage for partially constructed states
 	for i := 0; i < len(dimensions[0]); i++ {
 		s := new(State)
-		s.vals = make([]float64, 0)
-		s.vals = append(s.vals, dimensions[0][i])
+		s.Vals = make([]float64, 0)
+		s.Vals = append(s.Vals, dimensions[0][i])
 		partial.PushBack(*s)
 	}
 
@@ -79,16 +79,16 @@ func BuildLattice(dimensions [][]float64) []State {
 		// it onto the states array. otherwise, make enough copies
 		// to append all possible values of the next dimension and
 		// put them back onto the partial array.
-		if len(s.vals) == len(dimensions) {
-			s.id = index
+		if len(s.Vals) == len(dimensions) {
+			s.Id = index
 			states[index] = s
 			index++
 		} else {
-			for i := 0; i < len(dimensions[len(s.vals)]); i++ {
+			for i := 0; i < len(dimensions[len(s.Vals)]); i++ {
 				sp := new(State)
-				sp.vals = make([]float64, len(s.vals))
-				copy(sp.vals, s.vals)
-				sp.vals = append(sp.vals, dimensions[len(sp.vals)][i])
+				sp.Vals = make([]float64, len(s.Vals))
+				copy(sp.Vals, s.Vals)
+				sp.Vals = append(sp.Vals, dimensions[len(sp.Vals)][i])
 				partial.PushBack(*sp)
 			}
 		}

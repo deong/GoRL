@@ -5,7 +5,7 @@ package core
 // an array. In addition, we augment each action with a flag denoting whether
 // the system currently belives the action is optimal for a given state.
 type Action struct {
-	id     uint
-	val    float64
-	argmax bool
+	Id     uint
+	Val    float64
+	Argmax bool
 }

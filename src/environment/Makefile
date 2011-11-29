@@ -15,7 +15,8 @@ all: _obj/$(TARG).a
 
 GOFILES=\
 	cart_pole.go\
-	environment.go
+	environment.go\
+	mountain_car.go
 
 _go_.6: $(GOFILES) core
 	if [ ! -d _obj ]; then mkdir _obj; fi
