@@ -6,6 +6,7 @@ import (
 	"os"
 	"core"
 	"environment"
+	"learner"
 )
 
 func main() {
@@ -23,5 +24,10 @@ func main() {
 	}
 
 	env := environment.CreateEnvironment()
+	lrn := learner.CreateLearner()
+
+	lrn.Init(env)
+	lrn.Learn(env)
+	fmt.Println(lrn)
 	fmt.Println(env.Features())
 }

@@ -9,4 +9,9 @@ type State struct {
 	Vals []float64
 }
 
+func MakeState(dim uint) (s State) {
+	s = State{}
+	s.Vals = make([]float64, dim)
+	return
+}
 

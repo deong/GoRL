@@ -33,6 +33,10 @@ func (env *CartPoleEnv) Features() (f []Range) {
 	return
 }
 
+func (env *CartPoleEnv) ActionRange() Range {
+	return Range{-1.0, 1.0}
+}
+
 // return the immediate reward and new state resulting from taking action a in state s
 func (env *CartPoleEnv) ApplyAction(s State, a Action) (newState State, reward float64) {
 	force := a.Val * kForceMag
@@ -44,6 +48,7 @@ func (env *CartPoleEnv) ApplyAction(s State, a Action) (newState State, reward f
 	deltaX := temp - kPoleMassLength*deltaTheta*cosTheta/kTotalMass
 
 	// compute the next state
+	newState = MakeState(4)
 	newState.Vals[0] = s.Vals[0] + kTau*s.Vals[1]
 	newState.Vals[1] = s.Vals[1] + kTau*deltaX
 	newState.Vals[2] = s.Vals[2] + kTau*s.Vals[3]
@@ -73,4 +78,15 @@ func (env *CartPoleEnv) AtFailState(s State) bool {
 		return true
 	}
 	return false
+}
+
+// return the start state
+func (env *CartPoleEnv) StartState() (s State) {
+	s = State{0, []float64{0.0, 0.0, 0.0, 0.0}}
+	return
+}
+
+// reset the count
+func (env *CartPoleEnv) Reset() {
+	env.steps = 0
 }

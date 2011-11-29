@@ -15,9 +15,12 @@ type Range struct {
 // Defines an interface for all reinforcement learning problems
 type Environment interface {
 	Features() []Range
+	ActionRange() Range
 	ApplyAction(s State, a Action) (sp State, reward float64)
 	AtGoalState(s State) bool
 	AtFailState(s State) bool
+	StartState() State
+	Reset()
 }
 
 // return a new reinforcement learning environment

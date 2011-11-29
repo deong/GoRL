@@ -19,6 +19,10 @@ func (env *MountainCarEnv) Features() (f []Range) {
 	return
 }
 
+func (env *MountainCarEnv) ActionRange() Range {
+	return Range{-1.0, 1.0}
+}
+
 // return the immediate reward and new state resulting from taking action a in state s
 func (env *MountainCarEnv) ApplyAction(s State, a Action) (newState State, reward float64) {
 	// compute the new velocity
@@ -41,6 +45,7 @@ func (env *MountainCarEnv) ApplyAction(s State, a Action) (newState State, rewar
 		cartPosition = mcFeatureRanges[0].Max
 	}
 
+	newState = MakeState(2)
 	newState.Vals[0] = cartPosition
 	newState.Vals[1] = cartVelocity
 
@@ -63,4 +68,15 @@ func (_ *MountainCarEnv) AtGoalState(s State) bool {
 // There is no fail state for the mountain car problem
 func (_ *MountainCarEnv) AtFailState(_ State) bool {
 	return false
+}
+
+// return a start state
+func (_ *MountainCarEnv) StartState() (s State) {
+	s = State{0, []float64{-0.5, 0.0}}
+	return
+}
+
+// reset the environment (nothing to do for this problem)
+func (_ *MountainCarEnv) Reset() {
+	return
 }

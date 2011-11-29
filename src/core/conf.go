@@ -37,6 +37,15 @@ func IntParameter(sec, name string) (val int, err os.Error) {
 }
 
 // return the value of the parameter as an int
+func UintParameter(sec, name string) (val uint, err os.Error) {
+	// TODO: replace conversion with GetUint operator
+	var ival int
+	ival, err = rc.GetInt(sec, name)
+	val = uint(ival)
+	return 
+}
+
+// return the value of the parameter as an int
 func Float64Parameter(sec, name string) (val float64, err os.Error) {
 	val, err = rc.GetFloat64(sec, name)
 	return 
