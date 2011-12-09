@@ -1,8 +1,7 @@
-package environment
+package main
 
 import (
 	"math"
-	. "core"
 )
 
 type MountainCarEnv struct {

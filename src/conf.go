@@ -3,7 +3,7 @@
 // Hides the details of parsing out the parameters and provides additional 
 // functionality (e.g., parsing an array of int or float64 values.
 
-package core
+package main
 
 import (
 	"fmt"

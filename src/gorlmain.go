@@ -4,9 +4,6 @@ import (
 	"fmt"
 	"flag"
 	"os"
-	"core"
-	"environment"
-	"learner"
 )
 
 func main() {
@@ -18,16 +15,16 @@ func main() {
 		flag.Usage()
 		os.Exit(1)
 	}
-	if err := core.InitConfig(*configFile); err != nil {
+	if err := InitConfig(*configFile); err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
 
-	env := environment.CreateEnvironment()
-	lrn := learner.CreateLearner()
+	env := CreateEnvironment()
+	lrn := CreateLearner()
 
 	lrn.Init(env)
 	lrn.Learn(env)
 	fmt.Println(lrn)
-	fmt.Println(env.Features())
+	// fmt.Println(env.Features())
 }

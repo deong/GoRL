@@ -1,7 +1,6 @@
-package environment
+package main
 
 import (
-	. "core"
 	"os"
 	"fmt"
 )

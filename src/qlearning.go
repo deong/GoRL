@@ -1,11 +1,10 @@
-package qlearning
+package main
 
 import (
-	. "core"
 	"rand"
 	"os"
 	"fmt"
-	. "environment"
+	"math"
 )
 
 type QLearning struct {
@@ -121,39 +120,46 @@ func (self *QLearning) EpsilonGreedyAction(s State, epsilon float64) (indexOfBes
 // Learn the Q-values
 func (self *QLearning) Learn(env Environment) {
 	for epoch := uint(1); epoch <= self.maxEpochs; epoch++ {
-		fmt.Println("*************************************************")
-		fmt.Printf( "* starting epoch %v\n", epoch)
-		fmt.Println("*************************************************")
+		// fmt.Println("*************************************************")
+		// fmt.Printf( "* starting epoch %v\n", epoch)
+		// fmt.Println("*************************************************")
 		env.Reset()
 		s := env.StartState()
+		self.DiscretizeState(&s)
+		numSteps := 0
 		for !env.AtGoalState(s) && !env.AtFailState(s) {
-			fmt.Printf("s:  %v\n", s)
+			// fmt.Printf("s:  %v\n", s)
 
 			// select an action
 			aIndex, _, aGreedy := self.EpsilonGreedyAction(s, self.epsilon)
 			a := self.actions[aIndex]
-			fmt.Printf("a:  %v\n", a)
+			// fmt.Printf("a:  %v\n", a)
 
 			// observe reward, next state
 			sp, reward := env.ApplyAction(s, a)
-			fmt.Printf("r:  %v\n", reward)
-			fmt.Printf("s': %v\n", sp)
+			self.DiscretizeState(&sp)
+			// fmt.Printf("r:  %v\n", reward)
+			// fmt.Printf("s': %v\n", sp)
 
 			// calculate optimum value of next action
 			_, argmaxAP := self.ArgmaxAction(sp)
 			
 			// calculate error
 			delta := reward + self.gamma * argmaxAP - self.Q[s.Id][a.Id]
-			fmt.Printf("delta: %v\n", delta)
+			//fmt.Printf("delta: %v\n", delta)
 
-			// set the currently visited state in the trace
+			// fmt.Printf("updating Q[%v,%v] from %v to %v\n", s.Id, a.Id, self.Q[s.Id][a.Id],
+			// 	self.Q[s.Id][a.Id] + self.alpha * delta)
+			//self.Q[s.Id][a.Id] += self.alpha * delta
+
+			// // set the currently visited state in the trace
 			if aGreedy {
 				self.E[s.Id][a.Id] = 1.0
 			} else {
 				self.E[s.Id][a.Id] = 0.0
 			}
 
-			// update the policy
+			// // update the policy
 			for i := range self.Q {
 				for j := range self.Q[i] {
 					self.Q[i][j] += self.alpha * delta * self.E[i][j]
@@ -161,8 +167,40 @@ func (self *QLearning) Learn(env Environment) {
 				}
 			}
 
+			// print the Q-values
+			// for i := range self.Q {
+			// 	fmt.Printf("state %v (%v):\t\t%v\n", i, self.states[i], self.Q[i])
+			// }
+			// fmt.Println("")
+
 			// iterate the policy
 			s = sp
+
+			numSteps++
 		}
+		self.epsilon *= 0.95
+		fmt.Printf("Epoch: %v -- Pole balanced for %v steps.\n", epoch, numSteps)
 	}
 }
+
+// given an arbitrary state vector, set its id to that of the nearest state in the space
+func (self *QLearning) DiscretizeState(s *State) {
+	// TODO: do a more efficient calculation to replace this search
+	idOfNearest := 0
+	distToNearest := math.MaxFloat64
+	for i := range self.states {
+		currentDist := EuclideanDistance(s, &self.states[i])
+		if currentDist < distToNearest {
+			idOfNearest = i
+			distToNearest = currentDist
+		}
+	}
+	s.Id = uint(idOfNearest)
+}
+
+// func (self *QLearning) SavePolicy(filename string) os.Error {
+// 	f, err := os.Create(filename)
+// 	if err != nil {
+// 		("error saving policy: could not open '%v' for writing.\n", filename)
+// 	}
+// }

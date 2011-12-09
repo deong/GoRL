@@ -1,8 +1,8 @@
-package environment
+package main
 
 import (
 	"math"
-	. "core"
+	"rand"
 )
 
 type CartPoleEnv struct {
@@ -55,10 +55,14 @@ func (env *CartPoleEnv) ApplyAction(s State, a Action) (newState State, reward f
 	newState.Vals[3] = s.Vals[3] + kTau*deltaTheta
 
 	// calculate the reward
-	reward = 0
+	//reward = 0
+    reward = 10 - 10 * math.Pow(math.Fabs(10 * newState.Vals[2]), 2) - 
+		5 * math.Fabs(newState.Vals[0]) - 10 * newState.Vals[3]
 	if env.AtFailState(newState) {
-		reward = -1
+		//reward = -1
+        reward = -10000 - 50 * math.Fabs(newState.Vals[0]) - 100 * math.Fabs(newState.Vals[2])
 	}
+
 
 	env.steps++
 	return
@@ -83,6 +87,10 @@ func (env *CartPoleEnv) AtFailState(s State) bool {
 // return the start state
 func (env *CartPoleEnv) StartState() (s State) {
 	s = State{0, []float64{0.0, 0.0, 0.0, 0.0}}
+	// randomly perturb it slightly by applying a small random action 
+	r := rand.NormFloat64() * 0.25
+	a := Action{0, r, false}
+	s, _ = env.ApplyAction(s, a)
 	return
 }
 

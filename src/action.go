@@ -1,4 +1,4 @@
-package core
+package main
 
 // Actions in gorl are represented as a floating point action value along with
 // an integer id. Like states, the ids should be able to serve as indices into
