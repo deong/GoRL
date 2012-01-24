@@ -13,6 +13,7 @@ GOFILES=\
 	learner.go\
 	mountain_car.go\
 	qlearning.go\
+	rlearning.go\
 	state.go\
 	util.go
 

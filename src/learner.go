@@ -22,6 +22,8 @@ func CreateLearner () Learner {
 	}
 	if name == "qlearning" {
 		return new(QLearning)
+	} else if name == "rlearning" {
+		return new(RLearning)
 	}
 	return nil
 }
