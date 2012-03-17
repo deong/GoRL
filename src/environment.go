@@ -25,7 +25,7 @@ type Environment interface {
 // return a new reinforcement learning environment
 func CreateEnvironment() Environment {
 	var name string
-	var err os.Error
+	var err error
 	if name, err = StringParameter("environment", "problem"); err != nil {
 		fmt.Println(err)
 		os.Exit(1)

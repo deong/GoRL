@@ -39,7 +39,7 @@ func vectorEpsilonEqual(v1, v2 []float64, epsilon float64) bool {
 }
 
 func epsilonEqual(x, y, epsilon float64) bool {
-	if math.Fabs(x-y) < epsilon {
+	if math.Abs(x-y) < epsilon {
 		return true
 	}
 	return false

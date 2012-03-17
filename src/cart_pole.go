@@ -2,7 +2,7 @@ package main
 
 import (
 	"math"
-	"rand"
+	"math/rand"
 )
 
 type CartPoleEnv struct {
@@ -56,11 +56,11 @@ func (env *CartPoleEnv) ApplyAction(s State, a Action) (newState State, reward f
 
 	// calculate the reward
 	//reward = 0
-    reward = 10 - 10 * math.Pow(math.Fabs(10 * newState.Vals[2]), 2) - 
-		5 * math.Fabs(newState.Vals[0]) - 10 * newState.Vals[3]
+    reward = 10 - 10 * math.Pow(math.Abs(10 * newState.Vals[2]), 2) - 
+		5 * math.Abs(newState.Vals[0]) - 10 * newState.Vals[3]
 	if env.AtFailState(newState) {
 		//reward = -1
-        reward = -10000 - 50 * math.Fabs(newState.Vals[0]) - 100 * math.Fabs(newState.Vals[2])
+        reward = -10000 - 50 * math.Abs(newState.Vals[0]) - 100 * math.Abs(newState.Vals[2])
 	}
 
 
@@ -78,7 +78,7 @@ func (env *CartPoleEnv) AtGoalState(s State) bool {
 
 // check if we're at the fail state
 func (env *CartPoleEnv) AtFailState(s State) bool {
-	if math.Fabs(s.Vals[0]) > 4.0 || math.Fabs(s.Vals[2]) > math.Pi/4.0 {
+	if math.Abs(s.Vals[0]) > 4.0 || math.Abs(s.Vals[2]) > math.Pi/4.0 {
 		return true
 	}
 	return false

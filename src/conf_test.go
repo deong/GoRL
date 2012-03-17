@@ -6,7 +6,7 @@ import (
 
 func TestInitConfig(t *testing.T) {
 	// check an existing file
-	if err := InitConfig("sample.cfg"); err != nil {
+	if err := InitConfig("sample_test.cfg"); err != nil {
 		t.Errorf("Error opening configuration file: %v\n", "sample.cfg")
 	} else {
 		// check a few parameters

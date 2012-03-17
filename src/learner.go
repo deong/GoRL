@@ -15,7 +15,7 @@ type Learner interface {
 
 func CreateLearner () Learner {
 	var name string
-	var err os.Error
+	var err error
 	if name, err = StringParameter("learning", "learner"); err != nil {
 		fmt.Println(err)
 		os.Exit(1)

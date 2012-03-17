@@ -1,7 +1,7 @@
 package main
 
 import (
-	"rand"
+	"math/rand"
 	"os"
 	"fmt"
 	"math"
@@ -23,7 +23,7 @@ type QLearning struct {
 func (self *QLearning) Init(env Environment) {
 	// create the state space
 	var nPoints []int
-	var err os.Error
+	var err error
 	if nPoints, err = IntArrayParameter("environment", "state_grid"); err != nil {
 		fmt.Println(err)
 		os.Exit(1)
@@ -198,7 +198,7 @@ func (self *QLearning) DiscretizeState(s *State) {
 	s.Id = uint(idOfNearest)
 }
 
-// func (self *QLearning) SavePolicy(filename string) os.Error {
+// func (self *QLearning) SavePolicy(filename string) error {
 // 	f, err := os.Create(filename)
 // 	if err != nil {
 // 		("error saving policy: could not open '%v' for writing.\n", filename)

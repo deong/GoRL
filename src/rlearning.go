@@ -1,7 +1,7 @@
 package main
 
 import (
-	"rand"
+	"math/rand"
 	"os"
 	"fmt"
 	"math"
@@ -21,7 +21,7 @@ type RLearning struct {
 func (self *RLearning) Init(env Environment) {
 	// create the state space
 	var nPoints []int
-	var err os.Error
+	var err error
 	if nPoints, err = IntArrayParameter("environment", "state_grid"); err != nil {
 		fmt.Println(err)
 		os.Exit(1)
@@ -128,7 +128,7 @@ func (self *RLearning) Learn(env Environment) {
 
 		// update the policy
 		self.Q[s.Id][a.Id] += self.alpha * delta
-		if math.Fabs(self.Q[s.Id][a.Id] - argmaxAP) < 1e-8 {
+		if math.Abs(self.Q[s.Id][a.Id] - argmaxAP) < 1e-8 {
 			self.rho += self.beta * delta
 		}
 

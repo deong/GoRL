@@ -7,7 +7,7 @@ package main
 
 import (
 	"fmt"
-	gc "goconf.googlecode.com/hg"
+	gc "github.com/dlintw/goconf"
 	"strings"
 	"strconv"
 	"os"
@@ -19,25 +19,25 @@ var (
 )
 
 // parse the configuration file, returning any error encountered
-func InitConfig(file string) (err os.Error) {
+func InitConfig(file string) (err error) {
 	rc, err = gc.ReadConfigFile(file)
 	return 
 }
 
 // return the value of a given parameter as a string
-func StringParameter(sec, name string) (val string, err os.Error) {
+func StringParameter(sec, name string) (val string, err error) {
 	val, err = rc.GetString(sec, name)
 	return
 }
 
 // return the value of the parameter as an int
-func IntParameter(sec, name string) (val int, err os.Error) {
+func IntParameter(sec, name string) (val int, err error) {
 	val, err = rc.GetInt(sec, name)
 	return 
 }
 
 // return the value of the parameter as an int
-func UintParameter(sec, name string) (val uint, err os.Error) {
+func UintParameter(sec, name string) (val uint, err error) {
 	// TODO: replace conversion with GetUint operator
 	var ival int
 	ival, err = rc.GetInt(sec, name)
@@ -46,13 +46,13 @@ func UintParameter(sec, name string) (val uint, err os.Error) {
 }
 
 // return the value of the parameter as an int
-func Float64Parameter(sec, name string) (val float64, err os.Error) {
+func Float64Parameter(sec, name string) (val float64, err error) {
 	val, err = rc.GetFloat64(sec, name)
 	return 
 }
 
 // return the value of the parameter as an int
-func IntArrayParameter(sec, name string) (val []int, err os.Error) {
+func IntArrayParameter(sec, name string) (val []int, err error) {
 	var s string
 	if s, err = rc.GetString(sec, name); err != nil {
 		val = []int{}
@@ -63,7 +63,7 @@ func IntArrayParameter(sec, name string) (val []int, err os.Error) {
 }
 
 // return the value of the parameter as an int
-func Float64ArrayParameter(sec, name string) (val []float64, err os.Error) {
+func Float64ArrayParameter(sec, name string) (val []float64, err error) {
 	var s string
 	if s, err = rc.GetString(sec, name); err != nil {
 		val = []float64{}
@@ -78,7 +78,7 @@ func parseFloat64Vector(str, sep string) []float64 {
 	tokens := strings.Split(str, sep)
 	vals := make([]float64, len(tokens))
 	for i := range tokens {
-		val, err := strconv.Atof64(tokens[i])
+		val, err := strconv.ParseFloat(tokens[i], 64)
 		if err != nil {
 			fmt.Println(err)
 			os.Exit(1)
