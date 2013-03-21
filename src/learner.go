@@ -11,6 +11,7 @@ type Learner interface {
 	ArgmaxAction(s State) (indexOfBest uint, valueOfBest float64)
 	RandomAction(s State) (indexOfBest uint, valueOfBest float64)
 	EpsilonGreedyAction(s State, epsilon float64) (indexOfBest uint, valueOfBest float64, wasGreedy bool)
+	FollowPolicy(env Environment)
 }
 
 func CreateLearner () Learner {

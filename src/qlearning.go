@@ -204,3 +204,19 @@ func (self *QLearning) DiscretizeState(s *State) {
 // 		("error saving policy: could not open '%v' for writing.\n", filename)
 // 	}
 // }
+
+func (self *QLearning) FollowPolicy(env Environment) {
+	env.Reset()
+	s := env.StartState()
+	num_steps := 0
+	for !env.AtGoalState(s) && !env.AtFailState(s) {
+		self.DiscretizeState(&s)
+		// select an action
+		aIndex, _ := self.ArgmaxAction(s)
+		a := self.actions[aIndex]
+		fmt.Printf("step %d: executing action %v\n", num_steps+1, a.Val)
+		num_steps++
+		// observe reward, next state
+		s, _ = env.ApplyAction(s, a)
+	}
+}

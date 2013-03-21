@@ -25,6 +25,7 @@ func main() {
 
 	lrn.Init(env)
 	lrn.Learn(env)
-	fmt.Println(lrn)
+	lrn.FollowPolicy(env)
+	// fmt.Println(lrn)
 	// fmt.Println(env.Features())
 }
